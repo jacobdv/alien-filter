@@ -30,8 +30,8 @@ const runFilter = () => {
         durationInput = (d3.select('#duration')).property('value'),
         commentInput = (d3.select('#comment')).property('value');
     
+    // creates object of user input for filtering
     let filterObject = {};
-
     if (dateInput) {
         filterObject.datetime = dateInput;
     };
@@ -54,21 +54,27 @@ const runFilter = () => {
         filterObject.comment = commentInput;
     };
 
+    // array of output objects from data
     let outputSightings = [];
 
+    // for each sighting, compare to user input requirements
     sightings.forEach(sighting => {
         let i = 0;
+
+        // for each user input value, increase iterator by one if it matches data
         Object.values(filterObject).forEach(value => {  
             if (Object.values(sighting).includes(value)) {
                 i += 1;
             };
         });
+
+        // if the data object matches all user input filters, push it to the output array
         if (i === Object.values(filterObject).length) {
             outputSightings.push(sighting);
         }
     });
         
-    // filters data output for user
+    // visually filters data output for user
     tbody.html('')
     outputSightings.forEach(sighting => {
         let row = tbody.append('tr');
@@ -79,5 +85,6 @@ const runFilter = () => {
     })
 };
 
+// runs filter function on button click
 button.on("click",runFilter);
 form.on("submit",runFilter);
