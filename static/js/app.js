@@ -2,7 +2,7 @@
 var sightings = data;
 
 // sets up button and form
-let button = d3.select("#button"),
+let button = d3.select("#filter-btn"),
     form = d3.select('#form');
 
 // appending sightings data in html table
@@ -23,7 +23,15 @@ const runFilter = () => {
     let dateInput = d3.select('#datetime'), 
         dateValue = dateInput.property('value');
     let dateFilter = sightings.filter(s => s.datetime === dateValue);
+    tbody.html('')
+    dateFilter.forEach((sighting) => {
+        let row = tbody.append('tr');
+        Object.values(sighting).forEach(value => {
+            let cell = row.append('td');
+            cell.text(value); 
+        })
+    })
 };
 
-button.on("click", runFilter);
+button.on("click",runFilter);
 form.on("submit",runFilter);
