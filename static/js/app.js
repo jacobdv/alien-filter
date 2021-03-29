@@ -35,32 +35,48 @@ const runFilter = () => {
     if (dateInput) {
         filterObject.datetime = dateInput;
     };
+    if (cityInput) {
+        filterObject.city = cityInput;
+    };
+    if (stateInput) {
+        filterObject.state = stateInput;
+    };
+    if (countryInput) {
+        filterObject.country = countryInput;
+    };
+    if (shapeInput) {
+        filterObject.shape = shapeInput;
+    };
+    if (durationInput) {
+        filterObject.duration = durationInput;
+    };
+    if (commentInput) {
+        filterObject.comment = commentInput;
+    };
 
-    console.log(filterObject);
-//
-// Filters multiple right now, only if all fields are filled 
-//
-    // sightings.forEach(sighting => {
-    //     let i = 0;
-    //     filterObject.values.forEach(value => {  
-    //         if (Object.values(sighting).includes(value)) {
-    //             i += 1;
-    //         };
-    //     });
-    //     if (i === filterObject.length) {
-    //         outputSightings.push(sighting);
-    //     }
-    // });
+    let outputSightings = [];
+
+    sightings.forEach(sighting => {
+        let i = 0;
+        Object.values(filterObject).forEach(value => {  
+            if (Object.values(sighting).includes(value)) {
+                i += 1;
+            };
+        });
+        if (i === Object.values(filterObject).length) {
+            outputSightings.push(sighting);
+        }
+    });
         
-    // // filters data output for user
-    // tbody.html('')
-    // outputSightings.forEach(sighting => {
-    //     let row = tbody.append('tr');
-    //     Object.values(sighting).forEach(value => {
-    //         let cell = row.append('td');
-    //         cell.text(value); 
-    //     })
-    // })
+    // filters data output for user
+    tbody.html('')
+    outputSightings.forEach(sighting => {
+        let row = tbody.append('tr');
+        Object.values(sighting).forEach(value => {
+            let cell = row.append('td');
+            cell.text(value); 
+        })
+    })
 };
 
 button.on("click",runFilter);
